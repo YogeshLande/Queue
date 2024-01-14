@@ -1,0 +1,144 @@
+//implementing a Queue Using Array
+
+import java.util.Scanner;
+public class Queue {
+    int QueueArr[];
+    int front;
+    int rear;
+    int maxSize;
+
+    Queue(int Size){
+        this.QueueArr=new int[Size];
+        this.front=-1;
+        this.rear=-1;
+        this.maxSize=Size;
+    }
+    void enqueue(int data){
+        if(rear==maxSize-1){
+            System.out.println("Queue is Full");
+            return;
+        }
+        if(front==-1){
+            front=rear=0;
+        }else {
+            rear++;
+        }
+        QueueArr[rear]=data;
+    }
+    int dequeue(){
+        if(front==-1){
+            System.out.println("Queue is empty");
+            return -1;
+        }else {
+            int ret=QueueArr[front];
+            front++;
+            if(front>rear){
+                front=rear=-1;
+            }
+            return ret;
+        }
+    }
+    boolean empty(){
+        if(front==-1)
+            return true;
+        else
+            return false;
+    }
+    int front(){
+        if(front==-1){
+        System.out.println("Queue is Empty ");
+        return -1;
+    }else{
+            return QueueArr[front];
+        }
+
+    }
+    int rear(){
+        if(rear==-1){
+            System.out.println("Queue is empty");
+            return -1;
+        }else {
+            return QueueArr[rear];
+        }
+    }
+    void PrintQueue(){
+        if(front==-1){
+            System.out.println("Queue is Empty");
+            return;
+        }else {
+            for(int i=front;i<=rear;i++){
+                System.out.print(QueueArr[i]+" ");
+            }
+            System.out.println();
+        }
+    }
+}
+class Client{
+    public static void main(String[]args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a Size of Array");
+        int Size = sc.nextInt();
+
+        Queue q = new Queue(Size);
+
+        char ch;
+        do{
+            System.out.println("1.enqueue");
+            System.out.println("2.dequeue");
+            System.out.println("3.empty");
+            System.out.println("4.front");
+            System.out.println("5.rear");
+            System.out.println("6.printQueue");
+            System.out.println("Enter Your Choice");
+            int Choice = sc.nextInt();
+
+            switch (Choice){
+                case 1:{
+                    System.out.println("Enter data to enqueue");
+                    int data=sc.nextInt();
+                    q.enqueue(data);
+                }
+                break;
+                case 2:{
+                    int ret = q.dequeue();
+                    if(ret!=-1){
+                        System.out.println(ret+" Popped");
+                    }
+                }
+                break;
+                case 3:{
+                    boolean ret =q.empty();
+                    if(ret)
+                        System.out.println("Queue is empty");
+                    else
+                        System.out.println("Queue is not empty");
+                }
+                break;
+                case 4:{
+                    int ret=q.front();
+                    if(ret!=-1)
+                        System.out.println("Front element is "+ret);
+                }
+                break;
+                case 5:{
+                    int ret=q.rear();
+                    if(ret!=-1)
+                        System.out.println("rear element is "+ret);
+
+                }
+                break;
+                case 6:
+                    q.PrintQueue();
+                    break;
+                default:
+                    System.out.println("Wrong Choice");
+                    break;
+
+
+            }
+            System.out.println("Continue");
+            ch=sc.next().charAt(0);
+
+        }while (ch=='Y'||ch=='y');
+    }
+}
